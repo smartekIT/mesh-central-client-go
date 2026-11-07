@@ -69,19 +69,13 @@ jobs:
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:linux sh mcc-gui/package/build.sh linux amd64 package
 
-      - name: Build Core macOS DMG Volumes
+      - name: Build Core macOS Binary Natively
         run: |
-          cd mcc-gui/package
-          podman build --no-cache -t mcc-gui-build:macos -f macos.Dockerfile .
-          cd ../..
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:macos sh mcc-gui/package/build.sh macos amd64 package
+          # Compile straight to Darwin without using Podman
+          ENV GOOS=darwin
+          ENV GOARCH=amd64
+          go build -ldflags="-s -w" -o dist/mcc-gui-mac-amd64 ./mcc-gui
+
 
       - name: Generate Consolidated Integrity Checksums
         run: |
