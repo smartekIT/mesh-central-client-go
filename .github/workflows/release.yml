@@ -42,7 +42,7 @@ jobs:
           echo "COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
-      - name: Build Core Windows Installer Executables
+      - name: Build Core Windows Installer Executables (MSI and ZIP)
         run: |
           cd mcc-gui/package
           podman build -t mcc-gui-build:windows -f windows.Dockerfile .
@@ -55,6 +55,17 @@ jobs:
             -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:windows sh mcc-gui/package/build.sh windows amd64 package
+
+      - name: Build Standalone Windows GUI Executable (.EXE)
+        run: |
+          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
+            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
+            -e VERSION=${{ steps.vars.outputs.VERSION }} \
+            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
+            -e DATE=${{ steps.vars.outputs.DATE }} \
+            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
+            -e APP_BUILD=${{ github.run_number }} \
+            mcc-gui-build:windows sh mcc-gui/package/build.sh windows amd64 build
 
       - name: Build Core Linux AppImage Packages
         run: |
@@ -70,52 +81,11 @@ jobs:
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:linux sh mcc-gui/package/build.sh linux amd64 package
 
-      - name: Upload Linux and Windows Draft Binaries
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-          files: |
-            dist/*
+      - name: Upload Consolidated Binaries via Native GitHub CLI
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  # ==========================================
-  # JOB 2: COMPILE MACOS NATIVELY ON MAC RUNNER
-  # ==========================================
-  build-macos:
-    name: Compile macOS Native DMG Volume
-    runs-on: macos-14
-    steps:
-      - name: Checkout Source Assets
-        uses: actions/checkout@v5
-
-      - name: Initialize Native Go Environment
-        uses: actions/setup-go@v6
-        with:
-          go-version: 'stable'
-          cache: true
-
-      - name: Configure Native Apple Qt 6 Environment
         run: |
-          brew update
-          brew install qt6 pkg-config
-
-      - name: Compile Apple DMG Application Package
-        env:
-          PKG_CONFIG_PATH: /opt/homebrew/opt/qt6/lib/pkgconfig
-          CGO_ENABLED: 1
-        run: |
-          # Build using the native macOS framework environment
-          go build -ldflags="-s -w" -o dist/mcc-gui-macos-arm64 ./mcc-gui
-
-      - name: Upload Finalized macOS Package to Existing Release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          files: |
-            dist/mcc-gui-macos-arm64
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          gh release create ${{ github.ref_name }} dist/* \
+            --title "Release ${{ github.ref_name }}" \
+            --notes "Automated build for Windows and Linux platforms." \
+            --clobber
