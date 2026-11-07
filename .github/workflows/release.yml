@@ -1,19 +1,17 @@
-name: Compile and Publish Multi-Platform Release Assets
+name: Compile Fast Release Assets (AMD64 Only)
 
 on:
   push:
     tags:
       - 'v*'
+      - '!v*-full' # Prevents this fast workflow from running if you want a full build
 
 permissions:
   contents: write
 
 jobs:
-  # ==========================================
-  # JOB 1: COMPILE WINDOWS AND LINUX ON UBUNTU
-  # ==========================================
-  build-linux-windows:
-    name: Compile Windows and Linux Assets
+  build-amd64-only:
+    name: Compile AMD64 Assets
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout Source Assets
@@ -42,9 +40,6 @@ jobs:
           echo "COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
 
-      # ==========================================
-      # BUILD ENVIRONMENT BASE CONTAINERS
-      # ==========================================
       - name: Build Windows Base Container
         run: |
           cd mcc-gui/package
@@ -55,9 +50,6 @@ jobs:
           cd mcc-gui/package
           podman build -t mcc-gui-build:linux -f linux.Dockerfile .
 
-      # ==========================================
-      # WINDOWS COMPILATION MATRIX (AMD64 & ARM64)
-      # ==========================================
       - name: Build Windows AMD64 Installer Packages (MSI & ZIP)
         run: |
           podman run --rm -v "${{ github.workspace }}:/src" -w /src \
@@ -80,31 +72,6 @@ jobs:
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:windows sh mcc-gui/package/build.sh windows amd64 build
 
-      - name: Build Windows ARM64 Installer Packages (MSI & ZIP)
-        run: |
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:windows sh mcc-gui/package/build.sh windows arm64 package
-
-      - name: Build Windows ARM64 Standalone GUI Binary (.EXE)
-        run: |
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:windows sh mcc-gui/package/build.sh windows arm64 build
-
-      # ==========================================
-      # LINUX COMPILATION MATRIX (AMD64 & ARM64)
-      # ==========================================
       - name: Build Linux AMD64 AppImage Package
         run: |
           podman run --rm -v "${{ github.workspace }}:/src" -w /src \
@@ -116,51 +83,7 @@ jobs:
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:linux sh mcc-gui/package/build.sh linux amd64 package
 
-      - name: Build Linux AMD64 Standalone CLI Binary
-        run: |
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:linux sh mcc-gui/package/build.sh linux amd64 build
-
-      - name: Build Linux ARM64 AppImage Package
-        run: |
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:linux sh mcc-gui/package/build.sh linux arm64 package
-
-      - name: Build Linux ARM64 Standalone CLI Binary
-        run: |
-          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
-            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
-            -e VERSION=${{ steps.vars.outputs.VERSION }} \
-            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
-            -e DATE=${{ steps.vars.outputs.DATE }} \
-            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
-            -e APP_BUILD=${{ github.run_number }} \
-            mcc-gui-build:linux sh mcc-gui/package/build.sh linux arm64 build
-
-      # ==========================================
-      # INTEGRITY MANIFEST GENERATION
-      # ==========================================
-      - name: Generate Global File Checksums
-        run: |
-          cd dist
-          sha256sum * > sha256sums.txt
-
-      # ==========================================
-      # UPLOAD DISPATCH TARGET
-      # ==========================================
-      - name: Upload Complete Asset Matrix
+      - name: Upload Fast AMD64 Assets
         uses: softprops/action-gh-release@v2.0.1
         with:
           tag_name: ${{ github.ref_name }}
