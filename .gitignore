@@ -5,3 +5,5 @@ dist
 .cache
 .config
 mcc-gui/rsrc_windows_*.syso
+archive
+archive/*

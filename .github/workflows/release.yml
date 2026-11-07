@@ -3,29 +3,31 @@ name: Compile and Publish Multi-Platform Release Assets
 on:
   push:
     tags:
-      - 'v*' # Triggers whenever you push a tag starting with v (e.g., v1.10.1)
+      - 'v*'
 
 permissions:
-  contents: write # Allows GitHub actions to upload binary assets directly to your release tab
+  contents: write
 
 jobs:
-  build-binaries:
-    name: Compile Application Ecosystem
-    runs-on: ubuntu-24.04 # High-efficiency Linux runtime runner environment
-    
+  # ==========================================
+  # JOB 1: COMPILE WINDOWS AND LINUX ON UBUNTU
+  # ==========================================
+  build-linux-windows:
+    name: Compile Windows and Linux Assets
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout Source Assets
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Initialize Native Go Environment
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: 'stable'
           cache: true
 
-      - name: Configure Linux Container Backend Engine
+      - name: Configure Container Engine
         run: |
           sudo apt-get update
           sudo apt-get install -y podman
@@ -33,7 +35,6 @@ jobs:
       - name: Extract Dynamic Workflow Versions
         id: vars
         run: |
-          # Get current tag without 'v' prefix
           TAG_NAME="${GITHUB_REF#refs/tags/}"
           CLEAN_VERSION="${TAG_NAME#v}"
           echo "VERSION=${TAG_NAME}" >> $GITHUB_OUTPUT
@@ -69,21 +70,7 @@ jobs:
             -e APP_BUILD=${{ github.run_number }} \
             mcc-gui-build:linux sh mcc-gui/package/build.sh linux amd64 package
 
-      - name: Build Core macOS Binary Natively
-        run: |
-          # Compile straight to Darwin without using Podman
-          export GOOS=darwin
-          export GOARCH=amd64
-          export CGO_ENABLED=0
-          go build -ldflags="-s -w" -o dist/mcc-gui-mac-amd64 ./mcc-gui
-
-
-      - name: Generate Consolidated Integrity Checksums
-        run: |
-          cd dist
-          sha256sum * > sha256sums.txt
-
-      - name: Generate Production Release Instance on GitHub
+      - name: Upload Linux and Windows Draft Binaries
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
@@ -92,5 +79,43 @@ jobs:
           prerelease: false
           files: |
             dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ==========================================
+  # JOB 2: COMPILE MACOS NATIVELY ON MAC RUNNER
+  # ==========================================
+  build-macos:
+    name: Compile macOS Native DMG Volume
+    runs-on: macos-14
+    steps:
+      - name: Checkout Source Assets
+        uses: actions/checkout@v5
+
+      - name: Initialize Native Go Environment
+        uses: actions/setup-go@v6
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Configure Native Apple Qt 6 Environment
+        run: |
+          brew update
+          brew install qt6 pkg-config
+
+      - name: Compile Apple DMG Application Package
+        env:
+          PKG_CONFIG_PATH: /opt/homebrew/opt/qt6/lib/pkgconfig
+          CGO_ENABLED: 1
+        run: |
+          # Build using the native macOS framework environment
+          go build -ldflags="-s -w" -o dist/mcc-gui-macos-arm64 ./mcc-gui
+
+      - name: Upload Finalized macOS Package to Existing Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          files: |
+            dist/mcc-gui-macos-arm64
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
