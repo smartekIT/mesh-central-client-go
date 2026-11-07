@@ -14,7 +14,7 @@ import (
 
 	qt "github.com/mappu/miqt/qt6"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // editMax is the largest file the editor opens.

@@ -13,8 +13,8 @@ import (
 	qt "github.com/mappu/miqt/qt6"
 	"github.com/mappu/miqt/qt6/mainthread"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral/fakeagent"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral/fakeagent"
 )
 
 // fakeFiles has files channels open on a fake agent serving a new folder,

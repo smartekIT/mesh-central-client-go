@@ -12,8 +12,8 @@ import (
 	"github.com/spf13/viper"
 	"github.com/zalando/go-keyring"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // TestScreenshot is run by tools/guibench with a local dummy server, one

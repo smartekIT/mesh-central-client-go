@@ -7,7 +7,7 @@ import (
 
 	"github.com/mappu/miqt/qt6/mainthread"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // One Details tab per device, the device's text shown as text, closed with
