@@ -1,0 +1,108 @@
+name: Compile Full Production Assets (Optimized All Architectures)
+
+on:
+  push:
+    tags:
+      - 'v*-full' # Only fires if your tag looks like v1.10.11-full
+
+permissions:
+  contents: write
+
+jobs:
+  build-complete-matrix:
+    name: Compile Complete Matrix
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Source Assets
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Initialize Native Go Environment
+        uses: actions/setup-go@v6
+        with:
+          go-version: 'stable'
+          cache: true
+
+      - name: Configure Container Engine
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y podman
+
+      - name: Extract Dynamic Workflow Versions
+        id: vars
+        run: |
+          TAG_NAME="${GITHUB_REF#refs/tags/}"
+          CLEAN_VERSION="${TAG_NAME#v}"
+          CLEAN_VERSION="${CLEAN_VERSION%-full}"
+          echo "VERSION=${CLEAN_VERSION}" >> $GITHUB_OUTPUT
+          echo "APP_VERSION=${CLEAN_VERSION}" >> $GITHUB_OUTPUT
+          echo "COMMIT=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_OUTPUT
+
+      # ==========================================
+      # STEP 1: COMPILE ENVIRONMENT BASE IMAGES ONCE
+      # ==========================================
+      - name: Compile Base Container Images
+        run: |
+          cd mcc-gui/package
+          podman build -t mcc-gui-build:windows -f windows.Dockerfile .
+          podman build -t mcc-gui-build:linux -f linux.Dockerfile .
+
+      # ==========================================
+      # STEP 2: RUN ALL WINDOWS COMPILATIONS IN ONE CONTAINER PASS
+      # ==========================================
+      - name: Execute Windows Compilation Matrix (AMD64 & ARM64)
+        run: |
+          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
+            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
+            -e VERSION=${{ steps.vars.outputs.VERSION }} \
+            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
+            -e DATE=${{ steps.vars.outputs.DATE }} \
+            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
+            -e APP_BUILD=${{ github.run_number }} \
+            mcc-gui-build:windows sh -c "
+              sh mcc-gui/package/build.sh windows amd64 package && \
+              sh mcc-gui/package/build.sh windows amd64 build && \
+              sh mcc-gui/package/build.sh windows arm64 package && \
+              sh mcc-gui/package/build.sh windows arm64 build
+            "
+
+      # ==========================================
+      # STEP 3: RUN ALL LINUX COMPILATIONS IN ONE CONTAINER PASS
+      # ==========================================
+      - name: Execute Linux Compilation Matrix (AMD64 & ARM64)
+        run: |
+          podman run --rm -v "${{ github.workspace }}:/src" -w /src \
+            -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
+            -e VERSION=${{ steps.vars.outputs.VERSION }} \
+            -e COMMIT=${{ steps.vars.outputs.COMMIT }} \
+            -e DATE=${{ steps.vars.outputs.DATE }} \
+            -e APP_VERSION=${{ steps.vars.outputs.APP_VERSION }} \
+            -e APP_BUILD=${{ github.run_number }} \
+            mcc-gui-build:linux sh -c "
+              sh mcc-gui/package/build.sh linux amd64 package && \
+              sh mcc-gui/package/build.sh linux amd64 build && \
+              sh mcc-gui/package/build.sh linux arm64 package && \
+              sh mcc-gui/package/build.sh linux arm64 build
+            "
+
+      # ==========================================
+      # STEP 4: INTEGRITY & DEPLOYMENT
+      # ==========================================
+      - name: Generate Global File Checksums
+        run: |
+          cd dist
+          sha256sum * > sha256sums.txt
+
+      - name: Upload Production Asset Matrix
+        uses: softprops/action-gh-release@v2.0.1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          files: |
+            dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
