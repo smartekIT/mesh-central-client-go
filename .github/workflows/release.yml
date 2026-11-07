@@ -72,8 +72,9 @@ jobs:
       - name: Build Core macOS Binary Natively
         run: |
           # Compile straight to Darwin without using Podman
-          ENV GOOS=darwin
-          ENV GOARCH=amd64
+          export GOOS=darwin
+          export GOARCH=amd64
+          export CGO_ENABLED=0
           go build -ldflags="-s -w" -o dist/mcc-gui-mac-amd64 ./mcc-gui
 
 
