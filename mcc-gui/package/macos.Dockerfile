@@ -71,13 +71,13 @@ RUN rmdir /opt/ && \
 
 RUN mkdir -p /opt/local/libexec/qt6/lib/pkgconfig
 
-RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Core.pc  <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Core.pc <<'EOF'
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Core
 Description: Qt Core module
@@ -88,12 +88,12 @@ Requires: Qt6Platform
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Concurrent.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Concurrent
 Description: Qt Concurrent module
@@ -104,12 +104,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6DBus.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 DBus
 Description: Qt DBus module
@@ -120,12 +120,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Gui.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Gui
 Description: Qt Gui module
@@ -136,12 +136,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Network.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Network
 Description: Qt Network module
@@ -152,12 +152,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6OpenGL.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 OpenGL
 Description: Qt OpenGL module
@@ -168,12 +168,12 @@ Requires: Qt6Core Qt6Gui
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6OpenGLWidgets.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 OpenGLWidgets
 Description: Qt OpenGLWidgets module
@@ -184,13 +184,13 @@ Requires: Qt6OpenGL Qt6Widgets
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Platform.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
-ENV mkspecsdir=${prefix}/mkspecs
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
+mkspecsdir=${prefix}/mkspecs
 
 Name: Qt6 Platform
 Description: Qt Platform module
@@ -199,12 +199,12 @@ Cflags: -I${mkspecsdir}/macx-clang -I${includedir}
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6PrintSupport.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 PrintSupport
 Description: Qt PrintSupport module
@@ -215,12 +215,12 @@ Requires: Qt6Core Qt6Gui Qt6Widgets
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Sql.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Sql
 Description: Qt Sql module
@@ -231,12 +231,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Test.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Test
 Description: Qt Test module
@@ -247,12 +247,12 @@ Requires: Qt6Core
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Widgets.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Widgets
 Description: Qt Widgets module
@@ -263,12 +263,12 @@ Requires: Qt6Core Qt6Gui
 EOF
 
 RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Xml.pc <<'EOF'
-ENV prefix=/opt/local/libexec/qt6
-ENV exec_prefix=${prefix}
-ENV bindir=${prefix}/bin
-ENV libexecdir=${prefix}/libexec
-ENV libdir=${prefix}/lib
-ENV includedir=${prefix}/include
+prefix=/opt/local/libexec/qt6
+exec_prefix=${prefix}
+bindir=${prefix}/bin
+libexecdir=${prefix}/libexec
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: Qt6 Xml
 Description: Qt Xml module
