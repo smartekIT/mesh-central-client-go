@@ -72,7 +72,7 @@ jobs:
       - name: Build Core macOS DMG Volumes
         run: |
           cd mcc-gui/package
-          podman build -t mcc-gui-build:macos -f macos.Dockerfile .
+          podman build --no-cache -t mcc-gui-build:macos -f macos.Dockerfile .
           cd ../..
           podman run --rm -v "${{ github.workspace }}:/src" -w /src \
             -e GOTOOLCHAIN=auto -e GOFLAGS=-buildvcs=false \
