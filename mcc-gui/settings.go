@@ -11,7 +11,7 @@ import (
 
 	qt "github.com/mappu/miqt/qt6"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // A setting's choices, by pref value, label and icon (none if ""). The

@@ -7,7 +7,7 @@ amd64) triplet=x86_64-linux-gnu runtime=x86_64 ;;
 arm64) triplet=aarch64-linux-gnu runtime=aarch64 ;;
 *) echo "unsupported AppImage architecture: $arch" >&2; exit 1 ;;
 esac
-id=com.github.lexpaval.mcc-gui
+id=com.github.smartekIT.mcc-gui
 qt=/opt/qt/$arch
 install -Dm755 "$bin" "$app/usr/bin/mcc-gui"
 # Static, the About dialog copies it to ~/.local/bin.
@@ -124,7 +124,7 @@ chmod +x "$tools/appimagetool"
 # release's .zsync for this architecture, which the bundled zsyncmake
 # writes to the current directory.
 (cd "$output" && ARCH=$runtime "$tools/squashfs-root/AppRun" --no-appstream \
-	-u "gh-releases-zsync|lexpaval|mesh-central-client-go|latest|mcc-gui-linux-$arch-*.AppImage.zsync" \
+	-u "gh-releases-zsync|smartekIT|mesh-central-client-go|latest|mcc-gui-linux-$arch-*.AppImage.zsync" \
 	--runtime-file "$tools/runtime" "$app" "$image")
 mv "$output/$image.zsync" "$bin.AppImage.zsync"
 mv "$output/$image" "$bin.AppImage"

@@ -20,10 +20,10 @@ import (
 // The request carries nothing about the user or their devices.
 
 // releaseAPI answers with the latest release, tests replace it.
-var releaseAPI = "https://api.github.com/repos/lexpaval/mesh-central-client-go/releases/latest"
+var releaseAPI = "https://api.github.com/repos/smartekIT/mesh-central-client-go/releases/latest"
 
 const (
-	releasePages   = "https://github.com/lexpaval/mesh-central-client-go/releases/"
+	releasePages   = "https://github.com/smartekIT/mesh-central-client-go/releases/"
 	updateInterval = 24 * time.Hour
 )
 

@@ -17,10 +17,10 @@ set -eu
 target=$1 arch=$2 package=${3:-}
 cd /src
 name="MeshCentral Client"
-id=com.github.lexpaval.mcc-gui
+id=com.github.smartekIT.mcc-gui
 ldflags="-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE"
 # The mcc CLI the packages carry, cgo-free like the Makefile's build-all.
-cmd=github.com/lexpaval/mesh-central-client-go/cmd
+cmd=github.com/smartekIT/mesh-central-client-go/cmd
 cliflags="-s -w -X $cmd.Version=$VERSION -X $cmd.GitCommit=$COMMIT -X $cmd.BuildDate=$DATE"
 mkdir -p dist
 work=$(mktemp -d)

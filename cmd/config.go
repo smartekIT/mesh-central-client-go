@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
 	"github.com/spf13/cobra"
 )
 

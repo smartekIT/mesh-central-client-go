@@ -17,7 +17,7 @@
     <!-- Nothing to choose or repair, Apps & features offers only uninstall
          (WixUI_Minimal sets ARPNOMODIFY). -->
     <Property Id="ARPNOREPAIR" Value="1"/>
-    <Property Id="ARPURLINFOABOUT" Value="https://github.com/lexpaval/mesh-central-client-go"/>
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/smartekIT/mesh-central-client-go"/>
 
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="LocalAppDataFolder">

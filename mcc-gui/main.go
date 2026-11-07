@@ -29,14 +29,14 @@ import (
 	"github.com/mappu/miqt/qt6/mainthread"
 	"github.com/spf13/viper"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // Build details, set by the Makefile through -ldflags -X.
 var version, commit, buildDate string
 
-const appID = "com.github.lexpaval.mcc-gui"
+const appID = "com.github.smartekIT.mcc-gui"
 
 type activeRoute struct {
 	route  *meshcentral.Route
@@ -1849,7 +1849,7 @@ func showAbout() {
 
 	desc := qt.NewQLabel3("Desktop client for MeshCentral: shells, files, remote desktop and port routes\nto your devices, sharing profiles and 2FA login with the mcc CLI.\nNot affiliated with MeshCentral.")
 	// Release notes of this version when it's a release, the list otherwise.
-	const repo = "https://github.com/lexpaval/mesh-central-client-go"
+	const repo = "https://github.com/smartekIT/mesh-central-client-go"
 	notes := repo + "/releases"
 	if releaseTag.MatchString(version) {
 		notes += "/tag/" + version
@@ -1895,7 +1895,7 @@ func showAbout() {
 				}
 			}
 			// Go's build info names the module, without running the file.
-			if bi, err := buildinfo.ReadFile(dest); err == nil && bi.Main.Path == "github.com/lexpaval/mesh-central-client-go" {
+			if bi, err := buildinfo.ReadFile(dest); err == nil && bi.Main.Path == "github.com/smartekIT/mesh-central-client-go" {
 				return "update"
 			}
 			return "install"
