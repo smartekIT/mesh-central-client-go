@@ -7,7 +7,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <!-- UpgradeCode never changes, it ties every version to the same install. -->
   <Product Id="*" Name="MeshCentral Client" Language="1033" Version="$(var.Version)"
-           Manufacturer="Alexandru Paval" UpgradeCode="5A6B0F88-6A54-4C90-BE76-34B8E01ADF30">
+           Manufacturer="Wally A" UpgradeCode="5A6B0F88-6A54-4C90-BE76-34B8E01ADF30">
     <Package InstallerVersion="500" Compressed="yes" InstallScope="perUser"
              Description="MeshCentral Client" Comments="Devices, port routes and shells on a MeshCentral server"/>
     <!-- Builds between tags share a version, they replace each other too. -->
