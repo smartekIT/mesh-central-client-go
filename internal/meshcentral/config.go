@@ -11,7 +11,7 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
 )
 
 type Device struct {

@@ -19,7 +19,7 @@ import (
 	"github.com/gorilla/websocket"
 	"github.com/zalando/go-keyring"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
 )
 
 // Run the real command in a subprocess: proxy mode calls os.Exit, and its
