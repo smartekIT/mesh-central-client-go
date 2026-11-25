@@ -17,10 +17,10 @@ set -eu
 target=$1 arch=$2 package=${3:-}
 cd /src
 name="MeshCentral Client"
-id=com.github.lexpaval.mcc-gui
+id=com.github.smartekIT.mcc-gui
 ldflags="-s -w -X main.version=$VERSION -X main.commit=$COMMIT -X main.buildDate=$DATE"
 # The mcc CLI the packages carry, cgo-free like the Makefile's build-all.
-cmd=github.com/lexpaval/mesh-central-client-go/cmd
+cmd=github.com/smartekIT/mesh-central-client-go/cmd
 cliflags="-s -w -X $cmd.Version=$VERSION -X $cmd.GitCommit=$COMMIT -X $cmd.BuildDate=$DATE"
 mkdir -p dist
 work=$(mktemp -d)
@@ -47,7 +47,7 @@ windows)
 	arm64) env=/msys/clangarm64 cc=aarch64-w64-mingw32 ;;
 	esac
 	export GOARCH=$arch CC=$cc-clang CXX=$cc-clang++ PKG_CONFIG_PATH=$env/qt6-static/lib/pkgconfig
-	CGO_LDFLAGS=$(cat "$PKG_CONFIG_PATH/ldflags.txt")
+	CGO_LDFLAGS="$(cat "$PKG_CONFIG_PATH/ldflags.txt") -lbcrypt"
 	# miqt's gen_qrunnable.cpp uses std::nothrow, newer libc++ no longer
 	# brings in <new> on the way.
 	export CGO_LDFLAGS CGO_CXXFLAGS="-include new"

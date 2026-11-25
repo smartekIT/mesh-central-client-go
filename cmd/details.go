@@ -13,7 +13,7 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 var detailsCmd = &cobra.Command{

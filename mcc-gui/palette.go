@@ -8,7 +8,7 @@ import (
 
 	qt "github.com/mappu/miqt/qt6"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // Quick actions (Ctrl+K, Ctrl+Shift+K in a shell, where Ctrl+K is the

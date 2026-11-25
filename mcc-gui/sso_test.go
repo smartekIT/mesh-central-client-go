@@ -13,8 +13,8 @@ import (
 	"github.com/spf13/viper"
 	"github.com/zalando/go-keyring"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // A Router link opened from the browser logs the matching SSO profile in

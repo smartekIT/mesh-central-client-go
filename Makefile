@@ -5,9 +5,9 @@ COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")
 DATE := $(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 LDFLAGS := -ldflags "\
-	-X 'github.com/lexpaval/mesh-central-client-go/cmd.Version=$(VERSION)' \
-	-X 'github.com/lexpaval/mesh-central-client-go/cmd.GitCommit=$(COMMIT)' \
-	-X 'github.com/lexpaval/mesh-central-client-go/cmd.BuildDate=$(DATE)'"
+	-X 'github.com/smartekIT/mesh-central-client-go/cmd.Version=$(VERSION)' \
+	-X 'github.com/smartekIT/mesh-central-client-go/cmd.GitCommit=$(COMMIT)' \
+	-X 'github.com/smartekIT/mesh-central-client-go/cmd.BuildDate=$(DATE)'"
 
 build:
 	go build $(LDFLAGS) -o mcc .

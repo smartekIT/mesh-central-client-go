@@ -81,7 +81,7 @@ RUN rmdir /opt/ && \
 
 RUN mkdir -p /opt/local/libexec/qt6/lib/pkgconfig
 
-RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Core.pc  <<'EOF'
+RUN cat > /osxcross/macports/pkgs/opt/local/libexec/qt6/lib/pkgconfig/Qt6Core.pc <<'EOF'
 prefix=/opt/local/libexec/qt6
 exec_prefix=${prefix}
 bindir=${prefix}/bin

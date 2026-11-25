@@ -9,7 +9,7 @@ import (
 
 	qt "github.com/mappu/miqt/qt6"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // Files and folders move or copy within a device by dragging them onto a

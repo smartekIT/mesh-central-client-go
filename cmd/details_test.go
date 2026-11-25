@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 func TestPrintDetails(t *testing.T) {

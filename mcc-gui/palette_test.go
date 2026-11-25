@@ -7,7 +7,7 @@ import (
 
 	qt "github.com/mappu/miqt/qt6"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // press hands the palette a key as its search field gets it.

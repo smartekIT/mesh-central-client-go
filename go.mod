@@ -1,4 +1,4 @@
-module github.com/lexpaval/mesh-central-client-go
+module github.com/smartekIT/mesh-central-client-go
 
 go 1.26.2
 

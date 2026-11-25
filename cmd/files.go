@@ -15,8 +15,8 @@ import (
 	"github.com/spf13/cobra"
 	"golang.org/x/term"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
-	"github.com/lexpaval/mesh-central-client-go/internal/progress"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/progress"
 )
 
 var filesCmd = &cobra.Command{
