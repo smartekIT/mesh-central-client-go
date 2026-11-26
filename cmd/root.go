@@ -3,8 +3,8 @@ package cmd
 import (
 	"os"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"

@@ -19,8 +19,8 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral/fakeagent"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral/fakeagent"
 )
 
 // fakeDesktop has desktop sessions open on agent, returning what the agent

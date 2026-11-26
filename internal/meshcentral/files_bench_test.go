@@ -14,7 +14,7 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral/fakeagent"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral/fakeagent"
 )
 
 // delayed relays a websocket to target, holding each message for half of

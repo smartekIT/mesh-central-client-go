@@ -8,7 +8,7 @@ import (
 	"github.com/pterm/pterm"
 	"github.com/spf13/cobra"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
 )
 
 var profileCmd = &cobra.Command{

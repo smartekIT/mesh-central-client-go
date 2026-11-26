@@ -17,8 +17,8 @@ import (
 	qt "github.com/mappu/miqt/qt6"
 	"github.com/mappu/miqt/qt6/mainthread"
 
-	"github.com/lexpaval/mesh-central-client-go/internal/config"
-	"github.com/lexpaval/mesh-central-client-go/internal/meshcentral"
+	"github.com/smartekIT/mesh-central-client-go/internal/config"
+	"github.com/smartekIT/mesh-central-client-go/internal/meshcentral"
 )
 
 // Single sign-on hands the browser's session over through the web UI's
